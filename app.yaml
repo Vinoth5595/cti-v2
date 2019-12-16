@@ -1,0 +1,32 @@
+runtime: nodejs10
+
+handlers:
+
+# Routing for Javacript to serve directly
+- url: /(.+\.js)
+  static_files: dist/cti-v2/\1
+  upload: dist/cti-v2/.*
+  secure: always
+
+# Routing for a prod styles.css to serve directly
+- url: /(.+\.css)
+  static_files: dist/cti-v2/\1
+  upload: dist/cti-v2/.*
+  secure: always
+
+# Routing for typedoc, assets and favicon.ico to serve directly
+- url: /((?:assets|docs)/.*|favicon\.ico)
+  static_files: dist/cti-v2/\1
+  upload: dist/cti-v2/.*
+  secure: always
+
+# Use index.html for everything else.
+- url: /
+  static_files: dist/cti-v2/index.html
+  upload: dist/cti-v2/index.html
+  secure: always
+
+- url: /.*
+  static_files: dist/cti-v2/index.html
+  upload: dist/cti-v2/index.html
+  secure: always
