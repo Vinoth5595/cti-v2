@@ -4,7 +4,7 @@ import { CampaignComponent } from './campaign.component';
 import { CampaignRoutingModule } from './campaign-routing.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PageHeaderModule } from 'src/app/shared';
-
+import { ArchwizardModule } from 'angular-archwizard';
 
 
 @NgModule({
@@ -14,7 +14,8 @@ import { PageHeaderModule } from 'src/app/shared';
     PageHeaderModule,
     CampaignRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ArchwizardModule
   ]
 })
 export class CampaignModule { }

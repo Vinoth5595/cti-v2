@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CampaignConstants } from './campaign-constants';
 
 @Component({
   selector: 'app-campaign',
@@ -9,116 +10,150 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./campaign.component.scss']
 })
 export class CampaignComponent implements OnInit {
-
-  roles = ['Admin', 'Employee','Some role 1', 'Some role 2'];
-
-  test: any;
-
-//   orderForm: FormGroup;
-// items: FormArray;
-
   campaignForm: FormGroup;
+  did_numbers_array: FormArray;
+  queue_names_array: FormArray;
 
-  // createItem(): FormGroup {
-  //   return this.fb.group({
-  //     name: '',
-  //     description: '',
-  //     price: ''
-  //   });
-  // }
+  //START CAMPAIGN
+  label_campaign_name: string;
+  label_campaign_status: string;
+  label_type_of_call: string;
+  label_call_direction: string;
+  label_is_enabled_for_popup: string;
+  label_is_default: string;
+
+  //CAMPAIGN INCOMING
+  label_didnumber: string;
+  label_queuenames: string;
+  label_cti_postback_url: string;
+
+  //CAMPAIGN OUTGOING
+  label_is_extension_wise: string;
+  label_no_of_client_tries: string;
+  label_no_of_agent_tries: string;
+  label_retry_after: string;
+  label_trunk_name: string;
+  label_prefix: string;
+  label_dial_out_wait_time_in_secs: string;
+
+  //CAMPAIGN POPUP
+  label_module_name: string;
+  label_directory_info_url: string;
+  label_wrap_up_time_in_secs: string;
+  label_campaign_feed_source: string;
+
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
+    //START CAMPAIGN
+    this.label_campaign_name = CampaignConstants.LABEL_CAMPAIGN_NAME;
+    this.label_campaign_status = CampaignConstants.LABEL_CAMPAIGN_STATUS;
+    this.label_type_of_call = CampaignConstants.LABEL_TYPE_OF_CALL;
+    this.label_call_direction = CampaignConstants.LABEL_CALL_DIRECTION;
+    this.label_is_enabled_for_popup = CampaignConstants.LABEL_IS_ENABLED_FOR_POPUP;
+    this.label_is_default = CampaignConstants.LABEL_IS_DEFAULT;
 
-    // this.orderForm = this.fb.group({
-    //   customerName: '',
-    //   email: '',
-    //   items: this.fb.array([ this.createItem() ])
-    // });
+    //CAMPAIGN INCOMING
+    this.label_didnumber = CampaignConstants.LABEL_DID_NUMBER;
+    this.label_queuenames = CampaignConstants.LABEL_QUEUE_NAMES;
+    this.label_cti_postback_url = CampaignConstants.LABEL_CTI_POSTBACK_URL;
+
+    //CAMPAIGN OUTGOING
+    this.label_is_extension_wise = CampaignConstants.LABEL_IS_EXTENSION_WISE;
+    this.label_no_of_client_tries = CampaignConstants.LABEL_NO_OF_CLIENT_TRIES;
+    this.label_no_of_agent_tries = CampaignConstants.LABEL_NO_OF_AGENT_TRIES;
+    this.label_retry_after = CampaignConstants.LABEL_RETRY_AFTER;
+    this.label_trunk_name = CampaignConstants.LABEL_TRUNK_NAME;
+    this.label_prefix = CampaignConstants.LABEL_PREFIX;
+    this.label_dial_out_wait_time_in_secs = CampaignConstants.LABEL_DIAL_OUT_WAIT_TIME_IN_SECS;
+
+    //CAMPAIGN POPUP
+    this.label_module_name = CampaignConstants.LABEL_MODULE_NAME;
+    this.label_directory_info_url = CampaignConstants.LABEL_DIRECTORY_INFO_URL;
+    this.label_wrap_up_time_in_secs = CampaignConstants.LABEL_WRAP_UP_TIME_IN_SECS;
+    this.label_campaign_feed_source = CampaignConstants.LABEL_CAMPAIGN_FEED_SOURCE;
 
     this.campaignForm = this.fb.group({
-      campaignName: 'AirtelSupport',
-      callDirection: 'INCOMING',
-      campaignStatus: 'Active',
+      campaignName: "AirtelSupport",
+      callDirection: "INCOMING",
+      campaignStatus: "Active",
       isEnabledForPopup: true,
-      typeOfCall: 'QUEUE_INCOMING',
-      isDefault: false,
+      typeOfCall: "QUEUE_INCOMING",
+      isDefault: true,
       campaignIncomingSettings: this.fb.group({
-        didNumbers: this.fb.array([]),
-        queueNames: this.fb.array([]),
-        ctiPostBackUrl: [''],
+        didNumbers: this.fb.array([
+          this.fb.control('277003')
+        ]),
+        queueNames: this.fb.array([
+          this.fb.control('3000')
+        ]),
+        ctiPostBackUrl: ['']
       }),
       campaignOutgoingSettings: this.fb.group({
-        isExtensionWise: [''],
-        noOfClientTries: [''],
-        noOfAgentTries: [''],
-        retryAfter: [''],
-        trunkName: this.fb.array(['']),
-        prefix: [''],
-        dialOutWaitTimeInSecs: [''],
+        isExtensionWise: [""],
+        noOfClientTries: [""],
+        noOfAgentTries: [""],
+        retryAfter: [""],
+        trunkName: this.fb.array([
+          this.fb.control('')
+        ]),
+        prefix: [""],
+        dialOutWaitTimeInSecs: [""]
       }),
       campaignPopup: this.fb.group({
-        moduleName: ['customer'],
-        directoryInfoURL: [''],
-        wrapUpTimeInSecs: [30],
-        campaignFeedSource: ['ModuleLinked'],
-        dispositions: this.fb.array([{
-          dispositionID: '9bca0b0a-9689-4712-906c-ac0712c7533c',
-          fieldDataType: 'DropDown',
-          dropDownValues: ['Resolved'],
-          fieldLabel: 'Resolution',
-          callWorkFlow: '',
-          dependantDisp: [],
-          sendSMS: false,
-          smsText: '',
-          conversion: false
-        }
-        ]),
-        showFields: this.fb.array([{
-          fieldLabel: 'Customer Since',
-          displayField: 'customerSince',
-          showFieldID: "251c351c-ff7a-4a92-95f0-8f5aec593132",
-          isUrl: false,
-        }])
+        moduleName: ["customer"],
+        directoryInfoURL: ["test.com"],
+        wrapUpTimeInSecs: ["30"],
+        campaignFeedSource: ["ModuleLinked"],
       })
     });
-    /*
-        this.campaignForm = new FormGroup({
-          firstName: new FormControl('AirtelSupport'),
-          callDirection: new FormControl('INCOMING'),
-          campaignStatus: new FormControl('Active'),
-          isEnabledForPopup: new FormControl('true'),
-          typeOfCall: new FormControl('QUEUE_INCOMING'),
-          isDefault: new FormControl('false'),
-          campaignIncomingSettings: new FormGroup({
-            didNumbers: new FormControl('277003'),
-            queueNames: new FormControl('3000')
-          })
-        });
-    */
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    //this.test = JSON.stringify(this.campaignForm.value);
-    let headers = new HttpHeaders({
-      'accountId': '5771644c4e00731d9bad9f33',
-      'userId': '5771647b4e00731d9bad9f36'
-    });
-    let options = { headers: headers };
-    console.log(this.campaignForm.value);
-    this.test = this.campaignForm.value;
-    this.http.post('http://35.200.165.53:8080/campaign/v1/newCampaign', this.campaignForm.value, options);
+
   }
 
+  get didNumbers_array() {
+    return this.campaignForm.get('campaignIncomingSettings').get('didNumbers') as FormArray;
+  }
 
-  addCreds() {
-    const creds = this.campaignForm.controls.credentials as FormArray;
-    creds.push(this.fb.group({
-      username: '',
-      password: '',
-    }));
+  get queuenames_array() {
+    return this.campaignForm.get('campaignIncomingSettings').get('queueNames') as FormArray;
+  }
+
+  get trunkname_array() {
+    return this.campaignForm.get('campaignOutgoingSettings').get('trunkName') as FormArray;
+  }
+
+  addDidNumbers(): void {
+    console.log('inside addDidNumbers');
+    this.didNumbers_array.push(this.fb.control(''));
+  }
+
+  removeDidNumbers(): void {
+    console.log('inside removeDidNumbers');
+    this.didNumbers_array.removeAt(this.didNumbers_array.length - 1);
+  }
+
+  addQueueNames(): void {
+    console.log('inside addQueueNames');
+    this.queuenames_array.push(this.fb.control(''));
+  }
+
+  removeQueueNames(): void {
+    console.log('inside removeQueueNames');
+    this.queuenames_array.removeAt(this.queuenames_array.length - 1);
+  }
+
+  addTrunkName(): void {
+    console.log('inside addTrunkName');
+    this.trunkname_array.push(this.fb.control(''));
+  }
+
+  removeTrunkName(): void {
+    console.log('inside removeTrunkName');
+    this.trunkname_array.removeAt(this.trunkname_array.length - 1);
   }
 
 }
