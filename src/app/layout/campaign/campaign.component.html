@@ -91,7 +91,7 @@
                             <button (click)="addDidNumbers()"><i class="fa fa-plus"></i>&nbsp;</button>
                             <button (click)="removeDidNumbers()"><i class="fa fa-minus" aria-hidden="true"></i></button>
                             <div
-                                *ngFor="let didnum of campaignForm.controls.campaignIncomingSettings.controls.didNumbers.controls; let i = index">
+                                *ngFor="let didnum of didNumbers_array.controls; let i = index">
                                 <input type="text" [formControlName]="i" class="form-control">
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                             <button (click)="addQueueNames()"><i class="fa fa-plus"></i>&nbsp;</button>
                             <button (click)="removeQueueNames()"><i class="fa fa-minus"></i>&nbsp;</button>
                             <div
-                                *ngFor="let didnum of campaignForm.controls.campaignIncomingSettings.controls.queueNames.controls; let i = index">
+                                *ngFor="let didnum of queuenames_array.controls; let i = index">
                                 <input type="text" [formControlName]="i" class="form-control">
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                             <button (click)="addTrunkName()"><i class="fa fa-plus"></i>&nbsp;</button>
                             <button (click)="removeTrunkName()"><i class="fa fa-minus"></i>&nbsp;</button>
                             <div
-                                *ngFor="let didnum of campaignForm.controls.campaignOutgoingSettings.controls.trunkName.controls; let i = index">
+                                *ngFor="let didnum of trunkname_array.controls; let i = index">
                                 <input type="text" [formControlName]="i" class="form-control">
                             </div>
                         </div>
