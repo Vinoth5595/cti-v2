@@ -3,6 +3,8 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CampaignConstants } from './campaign-constants';
+import { CampaignService } from './campaign-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-campaign',
@@ -11,8 +13,7 @@ import { CampaignConstants } from './campaign-constants';
 })
 export class CampaignComponent implements OnInit {
   campaignForm: FormGroup;
-  did_numbers_array: FormArray;
-  queue_names_array: FormArray;
+  campaignResponseData: Observable<any>;
 
   //START CAMPAIGN
   label_campaign_name: string;
@@ -42,8 +43,25 @@ export class CampaignComponent implements OnInit {
   label_wrap_up_time_in_secs: string;
   label_campaign_feed_source: string;
 
+  //Disposition
+  label_field_data_type: string;
+  label_drop_down_value: string;
+  label_field_label: string;
+  label_call_workflow: string;
+  label_dependent_list: string;
+  label_send_sms: string;
+  label_sms_text: string;
+  label_conversion: string;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  //ShowField
+  label_sf_field_label: string;
+  label_display_field: string;
+  label_is_url: string;
+
+  //CampaignPopupIncoming
+  label_iframe_url: string;
+
+  constructor(private fb: FormBuilder, private campaignService: CampaignService) { }
 
   ngOnInit() {
     //START CAMPAIGN
@@ -73,6 +91,25 @@ export class CampaignComponent implements OnInit {
     this.label_directory_info_url = CampaignConstants.LABEL_DIRECTORY_INFO_URL;
     this.label_wrap_up_time_in_secs = CampaignConstants.LABEL_WRAP_UP_TIME_IN_SECS;
     this.label_campaign_feed_source = CampaignConstants.LABEL_CAMPAIGN_FEED_SOURCE;
+
+    //Disposition
+    this.label_field_data_type = CampaignConstants.LABEL_FIELD_DATA_TYPE;
+    this.label_drop_down_value = CampaignConstants.LABEL_DROP_DOWN_VALUES;
+    this.label_field_label = CampaignConstants.LABEL_FIELD_LABEL;
+    this.label_call_workflow = CampaignConstants.LABEL_CALL_WORKFLOW;
+    this.label_dependent_list = CampaignConstants.LABEL_DEPENDENT_LIST;
+    this.label_send_sms = CampaignConstants.LABEL_SEND_SMS;
+    this.label_sms_text = CampaignConstants.LABEL_SMS_TEXT;
+    this.label_conversion = CampaignConstants.LABEL_CONVERSION;
+
+    //ShowField
+    this.label_sf_field_label = CampaignConstants.LABEL_SF_FIELD_LABEL;
+    this.label_display_field = CampaignConstants.LABEL_DISPLAY_FIELD;
+    this.label_is_url = CampaignConstants.LABEL_IS_URL;
+
+    //CampaignPopupIncoming
+    this.label_iframe_url = CampaignConstants.LABEL_IFRAME_URL;
+
 
     this.campaignForm = this.fb.group({
       campaignName: "AirtelSupport",
@@ -106,12 +143,38 @@ export class CampaignComponent implements OnInit {
         directoryInfoURL: ["test.com"],
         wrapUpTimeInSecs: ["30"],
         campaignFeedSource: ["ModuleLinked"],
-      })
+        dispositions: this.fb.array([this.createDisposition()]),
+        showFields: this.fb.array([this.createShowFields()]),
+        campaignPopupIncoming: this.fb.group({
+          iFrameUrl: ''
+        })
+      }),
     });
   }
 
-  onSubmit() {
+  createDisposition(): FormGroup {
+    return this.fb.group({
+      fieldDataType: 'DropDown',
+      dropDownValues: this.fb.array([
+        this.fb.control('Resolved')
+      ]),
+      fieldLabel: 'Resolution',
+      callWorkFlow: '',
+      dependantDisp: this.fb.array([
+        this.fb.control('')
+      ]),
+      sendSMS: false,
+      smsText: '',
+      conversion: false,
+    });
+  }
 
+  createShowFields(): FormGroup {
+    return this.fb.group({
+      fieldLabel: '',
+      displayField: '',
+      isUrl: false,
+    });
   }
 
   get didNumbers_array() {
@@ -124,6 +187,18 @@ export class CampaignComponent implements OnInit {
 
   get trunkname_array() {
     return this.campaignForm.get('campaignOutgoingSettings').get('trunkName') as FormArray;
+  }
+
+  get disposition_arr() {
+    return this.campaignForm.get('campaignPopup').get('dispositions') as FormArray;
+  }
+
+  get showfields_array() {
+    return this.campaignForm.get('campaignPopup').get('showFields') as FormArray;
+  }
+
+  get dropdown_array() {
+    return this.campaignForm.get('campaignPopup').get('dispositions').get('dropDownValues') as FormArray;
   }
 
   addDidNumbers(): void {
@@ -156,4 +231,39 @@ export class CampaignComponent implements OnInit {
     this.trunkname_array.removeAt(this.trunkname_array.length - 1);
   }
 
+  addDropDownValues(): void {
+    console.log('inside addDropDownValues');
+    this.dropdown_array.push(this.fb.control(''));
+  }
+
+  removeDropDownValues(): void {
+    console.log('inside removeDropDownValues');
+    this.dropdown_array.removeAt(this.dropdown_array.length - 1);
+  }
+
+  addDisposition(): void {
+    console.log('inside addDisposition');
+    this.disposition_arr.push(this.createDisposition());
+  }
+
+  removeDisposition(): void {
+    console.log('inside removeDisposition');
+    this.disposition_arr.removeAt(this.disposition_arr.length - 1);
+  }
+
+  addShowFields(): void {
+    console.log('inside addShowFields');
+    this.showfields_array.push(this.createShowFields());
+  }
+
+  removeShowFields(): void {
+    console.log('inside removeShowFields');
+    this.showfields_array.removeAt(this.showfields_array.length - 1);
+  }
+
+
+  onSubmit() : void {  
+    console.log('Form Submitted')
+    this.campaignResponseData = this.campaignService.postCampaignData(this.campaignForm.value);
+  }
 }

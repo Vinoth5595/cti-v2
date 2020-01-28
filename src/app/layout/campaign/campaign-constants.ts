@@ -1,4 +1,4 @@
-export class CampaignConstants{
+export class CampaignConstants {
     //START CAMPAIGN
     private static _LABEL_CAMPAIGN_NAME: string = "Campaign Name";
     private static _LABEL_CAMPAIGN_STATUS: string = "Campaign Status";
@@ -26,7 +26,25 @@ export class CampaignConstants{
     private static _LABEL_DIRECTORY_INFO_URL: string = "Directory Info URL";
     private static _LABEL_WRAP_UP_TIME_IN_SECS: string = "Wrap up time in Secs";
     private static _LABEL_CAMPAIGN_FEED_SOURCE: string = "Campaign Feed Source";
-    
+
+    //Disposition
+    private static _LABEL_FIELD_DATA_TYPE: string = "Field Data type";
+    private static _LABEL_DROP_DOWN_VALUES: string = "Drop down values";
+    private static _LABEL_FIELD_LABEL: string = "Field label";
+    private static _LABEL_CALL_WORKFLOW: string = "Call workflow";
+    private static _LABEL_DEPENDENT_LIST: string = "Dependent list";
+    private static _LABEL_SEND_SMS: string = "Sent SMS";
+    private static _LABEL_SMS_TEXT: string = "SMS Text";
+    private static _LABEL_CONVERSION: string = "Conversion";
+
+    //ShowField
+    private static _LABEL_SF_FIELD_LABEL: string = "Field label";
+    private static _LABEL_DISPLAY_FIELD: string = "Display Field";
+    private static _LABEL_IS_URL: string = "Is URL";
+
+    //CampaignPopupIncoming
+    private static _LABEL_IFRAME_URL: string = "IFrame URL";
+
     public static get LABEL_CAMPAIGN_NAME(): string {
         return CampaignConstants._LABEL_CAMPAIGN_NAME;
     }
@@ -73,7 +91,7 @@ export class CampaignConstants{
     public static get LABEL_DID_NUMBER(): string {
         return CampaignConstants._LABEL_DID_NUMBER;
     }
-    public static set LABEL_DID_NUMBER 
+    public static set LABEL_DID_NUMBER
         (value: string) {
         CampaignConstants._LABEL_DID_NUMBER = value;
     }
@@ -81,7 +99,7 @@ export class CampaignConstants{
     public static get LABEL_QUEUE_NAMES(): string {
         return CampaignConstants._LABEL_QUEUE_NAMES;
     }
-    public static set LABEL_QUEUE_NAMES 
+    public static set LABEL_QUEUE_NAMES
         (value: string) {
         CampaignConstants._LABEL_QUEUE_NAMES = value;
     }
@@ -117,7 +135,7 @@ export class CampaignConstants{
     public static get LABEL_RETRY_AFTER(): string {
         return CampaignConstants._LABEL_RETRY_AFTER;
     }
-    public static set LABEL_RETRY_AFTER 
+    public static set LABEL_RETRY_AFTER
         (value: string) {
         CampaignConstants._LABEL_RETRY_AFTER = value;
     }
@@ -125,7 +143,7 @@ export class CampaignConstants{
     public static get LABEL_TRUNK_NAME(): string {
         return CampaignConstants._LABEL_TRUNK_NAME;
     }
-    public static set LABEL_TRUNK_NAME 
+    public static set LABEL_TRUNK_NAME
         (value: string) {
         CampaignConstants._LABEL_TRUNK_NAME = value;
     }
@@ -147,7 +165,7 @@ export class CampaignConstants{
     public static get LABEL_MODULE_NAME(): string {
         return CampaignConstants._LABEL_MODULE_NAME;
     }
-    public static set LABEL_MODULE_NAME 
+    public static set LABEL_MODULE_NAME
         (value: string) {
         CampaignConstants._LABEL_MODULE_NAME = value;
     }
@@ -171,5 +189,104 @@ export class CampaignConstants{
     }
     public static set LABEL_CAMPAIGN_FEED_SOURCE(value: string) {
         CampaignConstants._LABEL_CAMPAIGN_FEED_SOURCE = value;
+    }
+
+
+    public static get LABEL_FIELD_DATA_TYPE(): string {
+        return CampaignConstants._LABEL_FIELD_DATA_TYPE;
+    }
+    public static set LABEL_FIELD_DATA_TYPE(value: string) {
+        CampaignConstants._LABEL_FIELD_DATA_TYPE = value;
+    }
+
+
+    public static get LABEL_DROP_DOWN_VALUES(): string {
+        return CampaignConstants._LABEL_DROP_DOWN_VALUES;
+    }
+    public static set LABEL_DROP_DOWN_VALUES(value: string) {
+        CampaignConstants._LABEL_DROP_DOWN_VALUES = value;
+    }
+
+    public static get LABEL_FIELD_LABEL(): string {
+        return CampaignConstants._LABEL_FIELD_LABEL;
+    }
+    public static set LABEL_FIELD_LABEL
+        (value: string) {
+        CampaignConstants._LABEL_FIELD_LABEL = value;
+    }
+
+    public static get LABEL_CALL_WORKFLOW(): string {
+        return CampaignConstants._LABEL_CALL_WORKFLOW;
+    }
+    public static set LABEL_CALL_WORKFLOW
+        (value: string) {
+        CampaignConstants._LABEL_CALL_WORKFLOW = value;
+    }
+
+
+    public static get LABEL_DEPENDENT_LIST(): string {
+        return CampaignConstants._LABEL_DEPENDENT_LIST;
+    }
+    public static set LABEL_DEPENDENT_LIST(value: string) {
+        CampaignConstants._LABEL_DEPENDENT_LIST = value;
+    }
+
+
+    public static get LABEL_SEND_SMS(): string {
+        return CampaignConstants._LABEL_SEND_SMS;
+    }
+    public static set LABEL_SEND_SMS(value: string) {
+        CampaignConstants._LABEL_SEND_SMS = value;
+    }
+
+
+    public static get LABEL_SMS_TEXT(): string {
+        return CampaignConstants._LABEL_SMS_TEXT;
+    }
+    public static set LABEL_SMS_TEXT(value: string) {
+        CampaignConstants._LABEL_SMS_TEXT = value;
+    }
+
+    public static get LABEL_CONVERSION(): string {
+        return CampaignConstants._LABEL_CONVERSION;
+    }
+    public static set LABEL_CONVERSION 
+        (value: string) {
+        CampaignConstants._LABEL_CONVERSION = value;
+    }
+
+    
+    public static get LABEL_SF_FIELD_LABEL(): string {
+        return CampaignConstants._LABEL_SF_FIELD_LABEL;
+    }
+    public static set LABEL_SF_FIELD_LABEL 
+        (value: string) {
+        CampaignConstants._LABEL_SF_FIELD_LABEL = value;
+    }
+
+    
+    public static get LABEL_DISPLAY_FIELD(): string {
+        return CampaignConstants._LABEL_DISPLAY_FIELD;
+    }
+    public static set LABEL_DISPLAY_FIELD 
+        (value: string) {
+        CampaignConstants._LABEL_DISPLAY_FIELD = value;
+    }
+
+    
+    public static get LABEL_IS_URL(): string {
+        return CampaignConstants._LABEL_IS_URL;
+    }
+    public static set LABEL_IS_URL(value: string) {
+        CampaignConstants._LABEL_IS_URL = value;
+    }
+
+    
+    public static get LABEL_IFRAME_URL(): string {
+        return CampaignConstants._LABEL_IFRAME_URL;
+    }
+    public static set LABEL_IFRAME_URL 
+        (value: string) {
+        CampaignConstants._LABEL_IFRAME_URL = value;
     }
 }
