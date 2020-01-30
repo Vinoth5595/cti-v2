@@ -6,52 +6,63 @@ handlers:
 - url: /(.+\.js)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
   # To load images
 - url: /(.+\.png)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
   # To load eot files for font awesome
 - url: /(.+\.eot)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
    # To load svg files for font awesome
 - url: /(.+\.svg)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
   # To load woff2 files for font awesome
 - url: /(.+\.woff2)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
     # To load ttf files for font awesome
 - url: /(.+\.ttf)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
       # To load woff files for font awesome
 - url: /(.+\.woff)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
 # Routing for a prod styles.css to serve directly
 - url: /(.+\.css)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
 # Routing for typedoc, assets and favicon.ico to serve directly
 - url: /((?:assets|docs)/.*|favicon\.ico)
   static_files: dist/cti-v2/\1
   upload: dist/cti-v2/.*
+  secure: always
 
 # Use index.html for everything else.
 - url: /
   static_files: dist/cti-v2/index.html
   upload: dist/cti-v2/index.html
+  secure: always
 
 - url: /.*
   static_files: dist/cti-v2/index.html
   upload: dist/cti-v2/index.html
+  secure: always
