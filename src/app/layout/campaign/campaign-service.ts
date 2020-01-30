@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CampaignService {
 
-  CAMPAIGN_REST_URL="http://35.244.6.42:8762/portalservice/campaign/v1/newCampaign";
+  CAMPAIGN_REST_URL="https://35.244.6.42:8762/portalservice/campaign/v1/newCampaign";
 
   constructor(private httpClient: HttpClient) { }
 
