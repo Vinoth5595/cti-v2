@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CampaignConstants } from './campaign-constants';
 import { CampaignService } from './campaign-service';
 import { Observable } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-campaign',
@@ -14,6 +15,7 @@ import { Observable } from 'rxjs';
 export class CampaignComponent implements OnInit {
   campaignForm: FormGroup;
   campaignResponseData: Observable<any>;
+  sjonObj: any;
 
   //START CAMPAIGN
   label_campaign_name: string;
@@ -262,8 +264,50 @@ export class CampaignComponent implements OnInit {
   }
 
 
-  onSubmit() : void {  
-    console.log('Form Submitted')
-    this.campaignResponseData = this.campaignService.postCampaignData(this.campaignForm.value);
+
+
+
+  onSubmit(): void {
+    console.log('Form Submitted');
+    this.sjonObj = this.campaignForm.value;
+    this.campaignResponseData = this.campaignService.postCampaignData(
+      (function filter(obj) {
+        $.each(obj, function (key, value) {
+          if (value === "" || value === null) {
+            delete obj[key];
+          } else if (Object.prototype.toString.call(value) === '[object Object]') {
+            filter(value);
+          } else if ($.isArray(value)) {
+            $.each(value, function (k, v) { filter(v); });
+          }
+        });
+      })(this.sjonObj)
+    );
   }
+
+  removeFalsy = (obj) => {
+    let newObj = {};
+    Object.keys(obj).forEach((prop) => {
+      if (obj[prop]) { newObj[prop] = obj[prop]; }
+    });
+    return newObj;
+  };
+
+  removeEmptyOrNull = (obj) => {
+    Object.keys(obj).forEach(k =>
+      (obj[k] && typeof obj[k] === 'object') && this.removeEmptyOrNull(obj[k]) ||
+      (!obj[k] && obj[k] !== undefined) && delete obj[k]
+    );
+    return obj;
+  };
+
+
+  delet(obj) {
+    for (var prop in obj) {
+      if (obj[prop] === null || obj[prop] === undefined) {
+        delete obj[prop];
+      }
+    }
+  }
+
 }
